@@ -16,12 +16,23 @@ mongoose.connect(process.env.DB_CONNECTION,
 );
 
 //Middlewares
-const app = express();
+var app = express();
 
+app.set('view engine', 'ejs');
 app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(morgan('tiny'));
+
+/*Set view engine as ejs to omit .ejs when rendering a view and Set static folder
+--------------------------------------------------------------------------------------------
+Documentation:
+https://expressjs.com/en/guide/using-template-engines.html
+https://expressjs.com/en/starter/static-files.html
+*/
+app.set('view engine', 'ejs');
+app.use("/static", express.static("public"));
+
 
 const sslServer = https.createServer({
         key: fs.readFileSync(path.join(__dirname, 'selfSignedCertificates', 'app.key')),

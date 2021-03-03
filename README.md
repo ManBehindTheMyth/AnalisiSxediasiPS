@@ -6,3 +6,7 @@
 
 ## Error στο console
 Το error "(node:7612) Warning: Accessing non-existent property 'MongoError' of module exports inside circular dependency (Use `node --trace-warnings ...` to show where the warning was created)" το αμελούμε καθώς θα διoρθωθεί σε επόμενη έκδοση του mongoose.
+
+#html arxeia
+kanoume: npm install ejs --save (ola ta .html arxeia metafrazontai se .ejs san template)
+documentation: https://expressjs.com/en/guide/using-template-engines.html

@@ -1,0 +1,9 @@
+input[type=file]:focus,.form-control {
+        outline:black!important;
+        border-color: black;
+        box-shadow: none!important;
+    }
+    .input-group,
+    .form-control {
+        cursor: pointer;
+    }
