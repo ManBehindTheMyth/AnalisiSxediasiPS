@@ -6,6 +6,7 @@ const path = require('path');
 const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
+const multer = require('multer');
 
 require('dotenv').config();
 
@@ -17,14 +18,6 @@ mongoose.connect(process.env.DB_CONNECTION,
 
 //Middlewares
 var app = express();
-
-global.__basedir = __dirname;
-
-var corsOptions = {
-  origin: "http://localhost:8765"
-};
-
-app.use(cors(corsOptions));
 
 app.set('view engine', 'ejs');
 app.use(cors());
@@ -50,12 +43,25 @@ const sslServer = https.createServer({
 )
 
 //app.use('/', require('./routes/HomeRoute'));
-const initRoutes = require("./routes/HomeRoute");
 
-//app.use(express.urlencoded({ extended: true }));
-app.use('/', require('./routes/HomeRoute'));
-app.use('/upload', require('./routes/HomeRoute'))
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname);
+    }
+})
+const upload = multer({ storage });
 
+//app.use('/', require('./routes/HomeRoute'));
+//app.use('/upload', require('./routes/HomeRoute'))
+app.get('/', (req,res)=>{
+  res.render('home', {});
+});
+app.post("/upload", upload.single('shapefile'), function(req,res,next){
+  console.log(req.file)
+});
 
 //Listener
 sslServer.listen(8765, ()=>console.log("Https is On"));
