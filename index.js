@@ -18,6 +18,14 @@ mongoose.connect(process.env.DB_CONNECTION,
 //Middlewares
 var app = express();
 
+global.__basedir = __dirname;
+
+var corsOptions = {
+  origin: "http://localhost:8765"
+};
+
+app.use(cors(corsOptions));
+
 app.set('view engine', 'ejs');
 app.use(cors());
 app.use(bodyparser.json());
@@ -41,8 +49,14 @@ const sslServer = https.createServer({
     app
 )
 
-app.use('/', require('./routes/route'));
+//app.use('/', require('./routes/HomeRoute'));
+const initRoutes = require("./routes/HomeRoute");
+
+//app.use(express.urlencoded({ extended: true }));
+app.use('/', require('./routes/HomeRoute'));
+app.use('/upload', require('./routes/HomeRoute'))
+
 
 //Listener
 sslServer.listen(8765, ()=>console.log("Https is On"));
-// app.listen(8765, () => console.log("Http is On"));
+//app.listen(8765, () => console.log("Http is On"));

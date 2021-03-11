@@ -21,22 +21,34 @@
 
           <div class="col">
             <h3> User form </h3>
-            <div class="input-group">
-              <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-              <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
+            <div class="input-group" action="/upload" method="POST" enctype="multipart/form-data">
+              <input type="file" name="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+              <button class="btn btn-outline-secondary" type="button" id="button-submit">Button</button>
             </div>
           </div>
 
           <div class="col">
             <h3> Services form </h3>
+            <p>
             <select class="form-select"  aria-label="Default select example">
-              <option selected>Open this select menu</option>
+              <option selected>Choose Service</option>
               <option value="1">Service 1</option>
               <option value="2">Service 2</option>
               <option value="3">Service 3</option>
             </select>
           </div>
 
+        </div>
+        <div class="row">
+          <div class="col">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+              <input type="file" name="shapefile" multiple/>
+              <button>Submit</button>
+            </form>
+          </div>
+          <div class="col">
+
+          </div>
         </div>
       </div>
 
@@ -46,6 +58,6 @@
         <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
       </div>-->
 
-        <script type="text/javascript" src="/static/js/Home.js"></script>
+        <!--<script type="text/javascript" src="/static/js/home.js"></script>-->
     </body>
 </html>
