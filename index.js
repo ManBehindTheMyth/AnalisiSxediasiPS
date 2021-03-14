@@ -7,6 +7,9 @@ const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
 const multer = require('multer');
+var shp = require("shp2json");
+
+
 
 require('dotenv').config();
 
@@ -59,9 +62,24 @@ const upload = multer({ storage });
 app.get('/', (req,res)=>{
   res.render('home', {});
 });
+
+var ogr2ogr = require('ogr2ogr');
+
 app.post("/upload", upload.single('shapefile'), function(req,res,next){
-  console.log(req.file)
+  console.log(req.file.filename)
+
+  const ogr2 = ogr2ogr("uploads/"+req.file.filename)
+
+  ogr2.exec(function (er, data) {
+  if (er) console.error(er)
+  console.log(data)
+})
+
+
+  //res.render('home', {});
 });
+
+
 
 //Listener
 sslServer.listen(8765, ()=>console.log("Https is On"));
