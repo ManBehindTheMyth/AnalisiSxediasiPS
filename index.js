@@ -7,11 +7,14 @@ const fs = require('fs');
 const cors = require('cors');
 const morgan = require('morgan');
 const multer = require('multer');
-var shp = require("shp2json");
-
-
-
+const Geo = require("./models/GeoJSON");
 require('dotenv').config();
+const shapefile = require('shapefile');
+
+//Uncomment for Service-Bus Utility
+// const { ServiceBusClient } = require("@azure/service-bus");
+// const serviceBusClient = new ServiceBusClient(process.env.fullyQualifiedNamespace, process.env.credential);
+// const sender = serviceBusClient.createSender("my-queue");
 
 //Connect to MongoDB.
 mongoose.connect(process.env.DB_CONNECTION,
@@ -20,7 +23,7 @@ mongoose.connect(process.env.DB_CONNECTION,
 );
 
 //Middlewares
-var app = express();
+const app = express();
 
 app.set('view engine', 'ejs');
 app.use(cors());
@@ -45,8 +48,6 @@ const sslServer = https.createServer({
     app
 )
 
-//app.use('/', require('./routes/HomeRoute'));
-
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'uploads')
@@ -55,32 +56,39 @@ const storage = multer.diskStorage({
         cb(null, file.originalname);
     }
 })
-const upload = multer({ storage });
+const upload = multer({storage});
 
-//app.use('/', require('./routes/HomeRoute'));
-//app.use('/upload', require('./routes/HomeRoute'))
-app.get('/', (req,res)=>{
-  res.render('home', {});
+app.get('/', (req, res) => {
+    res.render('home', {});
 });
 
-var ogr2ogr = require('ogr2ogr');
+app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
+    console.log(req.file.filename)
 
-app.post("/upload", upload.single('shapefile'), function(req,res,next){
-  console.log(req.file.filename)
-
-  const ogr2 = ogr2ogr("uploads/"+req.file.filename)
-
-  ogr2.exec(function (er, data) {
-  if (er) console.error(er)
-  console.log(data)
-})
-
-
-  //res.render('home', {});
+    const GeoJSON = await shapefile.open("./uploads/" + req.file.filename)
+        .then(source => source.read()
+            .then(function log(result) {
+                if (result.done) return;
+                return result.value;
+            }))
+        .catch(error => console.error(error.stack));
+    let geoJ = new Geo({
+        shape: GeoJSON.geometry.type,
+        Coordinates: GeoJSON.geometry.coordinates
+    })
+    try {
+        await geoJ.save();
+    }
+    catch (err){
+        //Uncomment the following for Service-Bus Utility
+        // const messages = {body: "Save Failed"}
+        // await sender.sendMessages(messages);
+        console.log(err.message)
+    }
+    res.render('home', {});
 });
-
 
 
 //Listener
-sslServer.listen(8765, ()=>console.log("Https is On"));
+sslServer.listen(8765, () => console.log("Https is On"));
 //app.listen(8765, () => console.log("Http is On"));
