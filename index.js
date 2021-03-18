@@ -89,7 +89,7 @@ app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
     })
     try {
         await geoJ.save();
-        alert("Your file was uploaded succesfully!")
+        console.log("Your file was uploaded succesfully!")
     }
     catch (err){
         //Uncomment the following for Service-Bus Utility
@@ -103,7 +103,7 @@ app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
 app.get('/download',async(req,res)=>{
   try {
     clients= await Geo.find();
-    console.log(clients);
+    //console.log(clients);
     res.render('download',{clients});
   }catch(err){
     console.log(err)
