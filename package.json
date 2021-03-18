@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@azure/service-bus": "^7.0.3",
+    "amqplib": "^0.7.1",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
