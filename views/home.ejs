@@ -1,59 +1,46 @@
-<!doctype html>
 <html lang="en">
-    <head>
-        <title>Home</title>
-        <!-- Bootstrap CDN-->
-        <!-- Latest compiled and minified CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <!-- Popper JS -->
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
-        <!-- Latest compiled JavaScript -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="/static/css/home.css">
-    </head>
 
-    <body>
+<head>
 
-      <div class="container">
-        <div class="row">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/static/css/home.css">
+</head>
 
-          <!--<div class="col">
-            <h3> User form </h3>
-            <div class="input-group" action="/upload" method="POST" enctype="multipart/form-data">
-              <input type="file" name="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-              <button class="btn btn-outline-secondary" type="button" id="button-submit">Button</button>
-            </div>
-          </div>-->
-          <div class="col">
-            <h3> User form </h3>
-            <form action="/upload" method="post" enctype="multipart/form-data">
-              <input type="file" name="shapefile"/>
-              <button>Submit</button>
-            </form>
-          </div>
-
-          <div class="col">
-            <h3> Services form </h3>
-            <p>
-            <select class="form-select"  aria-label="Default select example">
-              <option selected>Choose Service</option>
-              <option value="1">Service 1</option>
-              <option value="2">Service 2</option>
-              <option value="3">Service 3</option>
-            </select>
-          </div>
-
-        </div>
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <h3> User form </h3>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+          <input type="file" name="shapefile"/>
+          <button>Submit</button>
+        </form>
       </div>
 
-      <!--<h3> User form </h3>
-      <div class="input-group">
-        <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-        <button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04">Button</button>
-      </div>-->
+      <div class="col">
+        <h3>DataList: </h3>
+        <% if (data.length > 0) { %>
+        <% data.forEach(d => { %>
+          <h3 class="title"><%= d.id %></h3>
+        <% }) %>
 
-        <!--<script type="text/javascript" src="/static/js/home.js"></script>-->
-    </body>
+        <a id="getData" class="getData" href="/download">LOAD DATA</a>
+        <div name="product_select" id="product_select">
+           <select name = "prices_products" id="prices_products" class="form-control input-lg" required>
+                   <option value="">Select Product</option>
+           </select>
+       </div>
+        <select name= "selectfile" class="form-select"  aria-label="Default select example">
+          <option selected>Choose File</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+
 </html>

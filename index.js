@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+//const mongoose = require("./dbConnect");
 const bodyparser = require('body-parser');
 const https = require('https');
 const path = require('path');
@@ -17,15 +18,25 @@ const shapefile = require('shapefile');
 // const sender = serviceBusClient.createSender("my-queue");
 
 //Connect to MongoDB.
-mongoose.connect(process.env.DB_CONNECTION,
+/*mongoose.connect(process.env.DB_CONNECTION,
     {useNewUrlParser: true, useUnifiedTopology: true}, () =>
         console.log('Connected to DB')
-);
+);*/
 
 //Middlewares
 const app = express();
 
-app.set('view engine', 'ejs');
+const uri = "mongodb+srv://admin:admin@cluster0.ordnd.mongodb.net/AnalisiSxediasiPS?retryWrites=true&w=majority";
+
+mongoose.connect(uri, {
+  dbName: 'AnalisiSxediasiPS',
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+  })
+  .catch((e)=>{
+  console.log('Database connectivity error ',e)
+  })
+
 app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
@@ -37,6 +48,7 @@ Documentation:
 https://expressjs.com/en/guide/using-template-engines.html
 https://expressjs.com/en/starter/static-files.html
 */
+//app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use("/static", express.static("public"));
 
@@ -85,7 +97,18 @@ app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
         // await sender.sendMessages(messages);
         console.log(err.message)
     }
-    res.render('home', {});
+    res.redirect('/');
+});
+
+app.get('/download',async(req,res)=>{
+  await Geo.find()
+    .then((result)=>{
+      //res.send(result);
+      res.render('home', {data:result});
+    })
+    .catch(err => {
+      console.log(err);
+    });
 });
 
 
