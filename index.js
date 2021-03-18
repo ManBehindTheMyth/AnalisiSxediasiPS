@@ -91,22 +91,21 @@ app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
         let requestData = geoJ.id;
         console.log("Published a request message, requestId:", requestId+"\n");
         await publishToChannel(channel, { routingKey: "request", exchangeName: "processing", data: { requestId, message, requestData } });
-        //res.redirect('/',{requestId});
-        res.render('home',{requestId});
+        res.redirect('/');
     }
     catch (err){
         console.log(err.message)
         res.redirect('/');
-    }
-});
+      }
+    });
 
 app.get('/download',async(req,res)=>{
   try {
     clients= await Geo.find();
     if(clients == "")
-      console.log("There is no data in the Databse")
+      console.log("There is no data in the Database\n")
     else
-      console.log("Data Retrieved Succesfully");
+      console.log("Data Retrieved Succesfully\n");
     res.render('download',{clients});
   }catch(err){
     console.log(err)
@@ -149,7 +148,7 @@ function consume({ connection, channel, resultsChannel }) {
       let requestId = data.requestId;
       let processingResults = data.processingResults;
       let message = data.message;
-      console.log("Received a result message, requestId:", requestId,"\nprocessingData with ID:", processingResults, "\nmessage:", message);
+      console.log("Received a result message, requestId:", requestId,"\nprocessingData with ID:", processingResults, "\nmessage:", message+"\n");
 
       // acknowledge message as received
       await channel.ack(msg);
