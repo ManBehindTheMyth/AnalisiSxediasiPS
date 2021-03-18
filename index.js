@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-//const mongoose = require("./dbConnect");
 const bodyparser = require('body-parser');
 const https = require('https');
 const path = require('path');
@@ -43,7 +42,7 @@ mongoose.connect(uri, {
 app.set('view engine', 'ejs');
 app.use("/static", express.static("public"));
 app.use(cors());
-app.use(morgan('tiny'));
+//app.use(morgan('tiny'));
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}));
 
@@ -74,8 +73,6 @@ app.get('/GTD', (req, res) => {
     res.render('download',{clients});
 });
 app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
-    console.log(req.file.filename)
-
     const GeoJSON = await shapefile.open("./uploads/" + req.file.filename)
         .then(source => source.read()
             .then(function log(result) {
@@ -89,7 +86,7 @@ app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
     })
     try {
         await geoJ.save();
-        console.log("Your file was uploaded succesfully!")
+        console.log("Your file "+req.file.filename+" uploaded succesfully!")
     }
     catch (err){
         //Uncomment the following for Service-Bus Utility
@@ -103,7 +100,10 @@ app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
 app.get('/download',async(req,res)=>{
   try {
     clients= await Geo.find();
-    //console.log(clients);
+    if(clients == "")
+      console.log("There is no data in the Databse")
+    else
+      console.log("Data Retrieved Succesfully");
     res.render('download',{clients});
   }catch(err){
     console.log(err)
