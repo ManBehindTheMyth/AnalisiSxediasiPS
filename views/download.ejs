@@ -13,29 +13,31 @@
 
   <div class="container">
     <div class="row">
+    <div class="col">
+        <h3> Data List </h3>
+        <form action="/download" method="get">
+            <input type="submit" name="Load_Data" value="Load_data" />
+        </form>
+        <div>
+          <ul class="clients">
+            <% for ( let client of clients ) { %>
+              <li class="client">
+                <span><%= client.id%>
+                <span><%= client.Coordinates%>
+              </li>
+            <% } %>
+          </ul>
 
-      <div class="col">
-        <h3> User form: </h3>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-          <input type="file" name="shapefile"/>
-          <button>Submit</button>
+        </div>
+        <a href="/">Back</a>
+        <form action="/" method="get">
+            <input type="submit" name="Back" value="Back" />
         </form>
       </div>
-
     </div>
-
-    <div class="row">
-
-      <div class="col">
-        <h3> Click the button for the:</h3>
-          <form action="/GTD" method="get">
-              <input type="submit" name="DownLoad_Page" value="DownLoad_Page" />
-          </form>
-      </div>
-
-    </div>
-
   </div>
+
+<script type="text/javascript" src="index.js"></script>
 
 </body>
 
