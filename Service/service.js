@@ -81,9 +81,8 @@ function consume({ connection, channel, resultsChannel }) {
 // simulate data processing that takes 5 seconds
 function processMessage(requestData) {
   return new Promise((resolve, reject) => {
-    //console.log(requestData);
     setTimeout(() => {
-      if(requestData.id != ''){
+      if(requestData.shape !== ''){
         message = "Your data uploaded succesfully";
       }
       else{

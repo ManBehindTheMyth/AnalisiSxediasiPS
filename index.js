@@ -12,11 +12,6 @@ require('dotenv').config();
 const shapefile = require('shapefile');
 const amqp = require('amqplib');
 
-//Uncomment for Service-Bus Utility
-// const { ServiceBusClient } = require("@azure/service-bus");
-// const serviceBusClient = new ServiceBusClient(process.env.fullyQualifiedNamespace, process.env.credential);
-// const sender = serviceBusClient.createSender("my-queue");
-
 //Middlewares
 const app = express();
   /*Set view engine as ejs to omit .ejs when rendering a view and Set static folder
@@ -88,7 +83,7 @@ app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
         let requestId = lastRequestId;
         lastRequestId++;
         let message = " ";
-        let requestData = geoJ.id;
+        let requestData = geoJ;
         console.log("Published a request message, requestId:", requestId+"\n");
         await publishToChannel(channel, { routingKey: "request", exchangeName: "processing", data: { requestId, message, requestData } });
         res.redirect('/');
