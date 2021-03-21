@@ -82,11 +82,11 @@ function consume({ connection, channel, resultsChannel }) {
 function processMessage(requestData) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if(requestData.shape !== ''){
+      if(requestData.id !== " "){
         message = "Your data uploaded succesfully";
       }
       else{
-        message = "Your data are wrong";
+        message = "Your data are wrong, try again!";
       }
       resolve(requestData + "-processed")
     }, 5000);

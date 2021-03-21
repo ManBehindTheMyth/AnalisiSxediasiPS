@@ -83,7 +83,7 @@ app.post("/upload", upload.single('shapefile'), async (req, res, next) => {
         let requestId = lastRequestId;
         lastRequestId++;
         let message = " ";
-        let requestData = geoJ;
+        let requestData = geoJ.id;
         console.log("Published a request message, requestId:", requestId+"\n");
         await publishToChannel(channel, { routingKey: "request", exchangeName: "processing", data: { requestId, message, requestData } });
         res.redirect('/');
