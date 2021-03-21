@@ -7,12 +7,12 @@
 ## Error στο console
 Το error "(node:7612) Warning: Accessing non-existent property 'MongoError' of module exports inside circular dependency (Use `node --trace-warnings ...` to show where the warning was created)" το αμελούμε καθώς θα διoρθωθεί σε επόμενη έκδοση του mongoose.
 
-#RabbitMQ is a messaging broker
+##RabbitMQ is a messaging broker
 δηλαδη ένας διαμεσολαβητής για ανταλλαγή μηνυμάτων.Μας παρέχει μια κοινή πλατφόρμα για την αποστολή και λήψη μηνυμάτων καθώς επίσης τα μηνύματά μας έχουν ένα ασφαλές μέρος για να “ζούνε” μέχρι να επεξεργαστούν απο την εκάστοτε υπηρεσία.
 
 → Δημιουργία δύο ουρών
-	→ Ουρά request-processing
-	Σε αυτήν την ουρά στέλνει μυνήματα-requests ο χρήστης όταν θέλει να ανεβάσει κάποιο αρχείο.
+→ Ουρά request-processing
+  Σε αυτήν την ουρά στέλνει μυνήματα-requests ο χρήστης όταν θέλει να ανεβάσει κάποιο αρχείο.
 
 	Σε αυτήν την ουρά ακούει μία η περισσότερες υπηρεσίες και λαμβάνουν τα μυνήματα-request του χρήστη
 	Η εκάστοτε υπηρεσία επεξεργάζεται το αρχείο που θέλει να ανεβάσει ο χρήστης και μόλις τελέιωσει η
@@ -43,4 +43,4 @@ node service.js (start a service)
 Για να τρέξετε την εφαρμογή μας θα πρέπει να δημιουργήσετε μια βάση δεδομένων στο mongoAtlas
 καθώς και ένα λογαριασμο στο CloudAMQP( CloudAMQP is hosted RabbitMQ servers (message queues) that lets you pass messages between processes and other systems). Έπειτα βάλτε στο .env αρχείο τα κατάλληλα URI's για την επιτυχή σύνδεση.
 
-Στα τερματικά εμφανίζονται κατάλληλα μυνήματα για όλες τις λειτουργίες της εφαρμογής μας. 
+Στα τερματικά εμφανίζονται κατάλληλα μυνήματα για όλες τις λειτουργίες της εφαρμογής μας.
